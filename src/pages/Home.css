@@ -1,0 +1,66 @@
+/* Home.css */
+
+.home-container {
+    flex-grow: 1;
+    background: #f5f5f5;
+    padding: 30px;
+    overflow-y: auto;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .section-chart,
+  .section-eval,
+  .section-wordcloud {
+    margin-bottom: 40px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .select-kernel {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    max-width: 300px;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .wordcloud-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .cloud-box {
+    flex: 1;
+    text-align: center;
+    min-width: 250px;
+  }
+  
+  .cloud-box img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .home-container {
+      padding: 15px;
+    }
+  
+    .cloud-box {
+      flex-basis: 100%;
+    }
+  
+    .table-responsive table {
+      min-width: 100%;
+    }
+  }
+  

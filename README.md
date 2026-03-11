@@ -1,70 +1,258 @@
-# Getting Started with Create React App
+# 🎯 Spam Detection Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplikasi web berbasis React untuk mendeteksi dan mengklasifikasikan komentar spam dan non-spam menggunakan metode **Support Vector Machine (SVM)** dengan berbagai jenis kernel. Aplikasi ini dikembangkan untuk menganalisis komentar dari website Dinas Penanaman Modal Terpadu Kabupaten Sidoarjo.
 
-## Available Scripts
+## Tampilan
+![Home](public/home.png)
+![riwayat](public/hasil.png)
+![Klasifikasi](public/test.png)
 
-In the project directory, you can run:
+## 📋 Fitur Utama
 
-### `npm start`
+### 1. **Dashboard Home**
+- 📊 Grafik Pie Chart yang menampilkan komposisi klasifikasi spam dan non-spam
+- 📈 Tabel evaluasi metrik model untuk berbagai kernel SVM:
+  - Linear Kernel (C=1)
+  - RBF Kernel (C=1, gamma=1)
+  - Polynomial Kernel (C=1, gamma=1, degree=3, coef0=0.1)
+  - Sigmoid Kernel (C=1, coef0=0.1)
+- ☁️ Visualisasi Word Cloud untuk kata-kata yang sering muncul di spam dan non-spam
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. **Cek Komentar**
+- ✍️ Input teks komentar untuk diklasifikasi
+- 🏷️ Prediksi klasifikasi (Spam/Non-Spam)
+- 🔍 Tampilan lengkap proses preprocessing:
+  - Cleaning
+  - Tokenizing
+  - Stopword Removal
+  - Stemming
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 3. **Hasil Preprocessing**
+- 📜 Riwayat klasifikasi komentar
+- 🔎 Fitur pencarian berdasarkan teks
+- 🎛️ Filter berdasarkan kategori (Semua/Spam/Non-Spam)
+- 📄 Pagination untuk menampilkan data dalam jumlah besar
 
-### `npm test`
+## 🛠️ Teknologi yang Digunakan
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Frontend
+- **React 19.1.0** - Library JavaScript untuk membangun UI
+- **React Router DOM 7.5.3** - Routing untuk navigasi antar halaman
+- **React Bootstrap 2.10.9** - Komponen UI Bootstrap untuk React
+- **Bootstrap 5.3.6** - Framework CSS untuk styling
+- **Chart.js 4.4.9** - Library untuk membuat grafik
+- **react-chartjs-2 5.3.0** - Wrapper Chart.js untuk React
+- **chartjs-plugin-datalabels 2.2.0** - Plugin untuk menambahkan label pada grafik
+- **Axios 1.9.0** - HTTP client untuk komunikasi dengan backend
+- **D3.js 7.9.0** - Library untuk manipulasi dokumen berbasis data
+- **Tippy.js 6.3.7** - Library untuk tooltip
 
-### `npm run build`
+### Backend
+- Backend menggunakan Flask yang berjalan pada port 5000
+- Endpoints yang digunakan:
+  - `GET /stats` - Mendapatkan statistik spam dan non-spam
+  - `POST /predict` - Melakukan prediksi klasifikasi
+  - `GET /history` - Mendapatkan riwayat preprocessing
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📁 Struktur Proyek
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+spam-app/
+├── public/                    # Assets statis
+│   ├── dpmptsp.png           # Logo Dinas Penanaman Modal
+│   ├── wc_spam.png           # Word Cloud untuk spam
+│   ├── wc_nonspam.png        # Word Cloud untuk non-spam
+│   └── index.html            # File HTML utama
+├── src/
+│   ├── components/           # Komponen Reusable
+│   │   ├── BarChart.js       # Komponen Bar Chart
+│   │   ├── PieChart.js       # Komponen Pie Chart
+│   │   └── Sidebar.js        # Komponen Sidebar navigasi
+│   ├── pages/                # Halaman aplikasi
+│   │   ├── Home.js           # Halaman Dashboard utama
+│   │   ├── Home.css          # Styles untuk Home
+│   │   ├── AddData.js        # Halaman Cek Komentar
+│   │   ├── AddData.css       # Styles untuk AddData
+│   │   ├── History.js        # Halaman Riwayat
+│   │   └── History.css       # Styles untuk History
+│   ├── api.js                # Konfigurasi Axios
+│   ├── App.js                # Komponen utama dengan routing
+│   ├── App.css               # Styles global
+│   └── index.js              # Entry point React
+└── package.json              # Dependencies dan scripts
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Instalasi dan Menjalankan Proyek
 
-### `npm run eject`
+### Prasyarat
+Sebelum memulai, pastikan Anda telah menginstal:
+- **Node.js** (v14 atau lebih tinggi)
+- **npm** atau **yarn**
+- **Backend Flask** yang berjalan pada `http://127.0.0.1:5000`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Langkah-langkah Instalasi
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone atau download proyek ini**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Konfigurasi Backend**
 
-## Learn More
+   Pastikan backend Flask Anda berjalan pada port 5000. Jika menggunakan port berbeda, ubah file [`src/api.js`](src/api.js):
+   ```javascript
+   const api = axios.create({
+     baseURL: 'http://127.0.0.1:5000', // Ubah sesuai port backend Anda
+   });
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Jalankan aplikasi dalam mode development**
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   Aplikasi akan terbuka di browser pada `http://localhost:3000`
 
-### Code Splitting
+5. **Build untuk produksi**
+   ```bash
+   npm run build
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   Folder `build/` akan dibuat dan siap untuk di-deploy
 
-### Analyzing the Bundle Size
+## 📊 Metrik Evaluasi Model
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Aplikasi ini menampilkan metrik evaluasi untuk setiap kernel SVM:
 
-### Making a Progressive Web App
+| Kernel | Akurasi | Precision | Recall | F1-Score |
+|--------|---------|-----------|--------|----------|
+| Linear | 98.27% | 0.98 | 0.98 | 0.98 |
+| RBF | 98.62% | 0.99 | 0.98 | 0.98 |
+| Polynomial | 98.62% | 0.99 | 0.98 | 0.98 |
+| Sigmoid | 98.62% | 0.98 | 0.99 | 0.98 |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🎨 Navigasi Aplikasi
 
-### Advanced Configuration
+Aplikasi memiliki 3 halaman utama yang dapat diakses melalui sidebar:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. **Home** (`/`) - Dashboard dengan statistik dan evaluasi model
+2. **Hasil Preprocessing** (`/history`) - Riwayat klasifikasi dengan fitur filter dan pencarian
+3. **Cek Komentar** (`/add`) - Form untuk input dan klasifikasi komentar baru
 
-### Deployment
+## 🔧 Konfigurasi
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Mengubah Port Backend
 
-### `npm run build` fails to minify
+Edit file [`src/api.js`](src/api.js):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://your-backend-url:port',
+});
+
+export default api;
+```
+
+### Mengubah jumlah item per halaman
+
+Edit file [`src/pages/History.js`](src/pages/History.js):
+
+```javascript
+const itemsPerPage = 5; // Ubah angka ini
+```
+
+## 📝 API Endpoints
+
+### Mendapatkan Statistik
+```http
+GET /stats
+Response: {
+  "spam": 123,
+  "non_spam": 456
+}
+```
+
+### Prediksi Klasifikasi
+```http
+POST /predict
+Body: {
+  "text": "isi komentar..."
+}
+Response: {
+  "prediction": "1", // 1 untuk spam, 0 untuk non-spam
+  "preprocessing": {
+    "cleaned": "teks hasil cleaning",
+    "tokens": ["token1", "token2"],
+    "removed_stopwords": ["kata1", "kata2"],
+    "stemmed": ["kata1", "kata2"]
+  }
+}
+```
+
+### Mendapatkan Riwayat
+```http
+GET /history
+Response: [
+  {
+    "text": "teks asli",
+    "cleaning": "hasil cleaning",
+    "tokenizing": ["token1"],
+    "stopword": ["token1"],
+    "stemming": ["stem1"],
+    "prediction": "1"
+  }
+]
+```
+
+## 🎯 Penggunaan
+
+1. **Melihat Statistik**
+   - Buka halaman Home untuk melihat grafik komposisi spam dan non-spam
+   - Pilih kernel yang diinginkan untuk melihat metrik evaluasi
+
+2. **Menambahkan Komentar Baru**
+   - Buka halaman Cek Komentar
+   - Masukkan teks komentar pada textarea
+   - Klik tombol "Klasifikasi"
+   - Lihat hasil prediksi dan proses preprocessing
+
+3. **Melihat Riwayat**
+   - Buka halaman Hasil Preprocessing
+   - Gunakan filter untuk menampilkan hanya spam atau non-spam
+   - Gunakan search untuk mencari teks tertentu
+   - Navigasi halaman dengan tombol Prev/Next
+
+## 🐛 Troubleshooting
+
+### Masalah: Tidak bisa terhubung ke backend
+**Solusi:**
+- Pastikan backend Flask berjalan pada port 5000
+- Cek konfigurasi di [`src/api.js`](src/api.js)
+- Pastikan tidak ada firewall yang memblokir koneksi
+
+### Masalah: Grafik tidak tampil
+**Solusi:**
+- Pastikan semua dependencies terinstall dengan benar
+- Cek console browser untuk error message
+- Pastikan file gambar word cloud ada di folder public
+
+### Masalah: Styling berantakan
+**Solusi:**
+- Clear cache browser
+- Hapus node_modules dan install ulang:
+  ```bash
+  rm -rf node_modules
+  npm install
+  ```
+
+
+## 👨‍🎓 Tentang Proyek
+
+Proyek ini dikembangkan sebagai bagian dari Skripsi dengan judul implementasi deteksi spam menggunakan metode Support Vector Machine (SVM) pada komentar web Dinas Penanaman Modal Terpadu Kabupaten Sidoarjo.
+
+---
+
